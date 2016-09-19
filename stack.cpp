@@ -30,7 +30,7 @@ private:
 template <typename T>
 stack<T>::stack() : array_size_(0), count_(0), array_(nullptr) {};
 template <typename T>
-stack<T>::~stack() { delete[] array_; count_ = 0;array_size_ = 0; }
+stack<T>::~stack() { delete[] array_; }
 template <typename T>
 size_t  stack<T>::count() const { return count_; };
 template <typename T>
