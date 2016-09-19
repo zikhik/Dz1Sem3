@@ -1,4 +1,5 @@
-
+#ifndef stack_cpp
+#define stack_cpp
 #include <cstdlib>
 #include <string>
 #include <iostream>
@@ -82,13 +83,5 @@ array_size_(tmp.array_size_)
     array_ = new T[array_size_];
     copy(tmp, tmp + count_, array_);
 }
-int main(void) {
-    
-    stack <int> a;
-    a.push(1);
-    a.push(2);
-    a.push(3);
-    cout << a.pop() << endl;
-    cout << a.pop() << endl;
-    
-}
+
+#endif
