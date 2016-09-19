@@ -1,4 +1,4 @@
-#include <ConsoleApplication2.cpp>
+#include <stack.cpp>
 #include <catch.hpp>
 #include <iostream>
 using namespace std;
