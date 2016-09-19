@@ -1,24 +1,31 @@
-#include "stdafx.h"
-#include<windows.h>
+
+#include <cstdlib>
+#include <string>
 #include <iostream>
 
 using namespace std;
+
 template <typename T>
 class stack
 {
 public:
-	stack();
-	size_t count() const;
-	void push(T const &item);
-	T pop();
-	~stack();
-
+    stack();
+    stack(const stack &);
+    stack& operator= (const stack &);
+    size_t count() const;
+    void push(T const &item);
+    T pop();
+    bool empty_() const;
+    ~stack();
+    
 private:
-
-	T * array_;
-	size_t array_size_;
-	size_t count_;
-
+    
+    T * array_;
+    size_t array_size_;
+    size_t count_;
+    void grow();
+    
+    
 };
 template <typename T>
 stack<T>::stack() : array_size_(0), count_(0), array_(nullptr) {};
@@ -29,47 +36,59 @@ size_t  stack<T>::count() const { return count_; };
 template <typename T>
 void stack<T>::push(T const &item)
 {
-	count_++;
-	if (array_size_ == 0) array_size_ = 1;
-	if (count_ > array_size_)  array_size_ = 2 * array_size_;
-	T* new_array = new T[array_size_];
-	new_array[0] = item;
-	for (int i = 0; i<count_-1;i++)
-		new_array[i+1] = array_[i];
-	delete[] array_;
-	array_ = new T[array_size_];
-	for (int i = 0; i<count_;i++)
-		array_[i] = new_array[i];
-	delete[] new_array;
-	cout << array_[0] << '\n';
+    if (array_size_ <= count_) { grow(); }
+    array_[count_++] = item;
 }
 
+template<typename T>
+T stack<T>::pop() {
+    if (empty_()) {
+        throw std::logic_error("Stack is empty!");
+    }
+    return array_[--count_];
+    
+}
 template <typename T>
-T stack<T>::pop()
-{
-	T* new_array;
-	T item = array_[0];
-	new_array = new T[array_size_];
-	for (int i = 0; i<count_ - 1;i++)
-		new_array[i] = array_[i + 1];
-	delete[] array_;
-	array_ = new T[array_size_];
-	for (int i = 0; i<count_;i++)
-		array_[i] = new_array[i];
-	count_--;
-	delete[] new_array;
-	return item;
+void stack<T>::grow() {
+    size_t new_array_size_=0;
+    if (array_size_ == 0) new_array_size_=1;
+    if (array_size_ <= count_) new_array_size_= new_array_size_*2;
+    T *new_array_ = new T[new_array_size_];
+    copy(array_, array_ + count_, new_array_);
+    if (!empty_()) {
+        delete[] array_;
+    }
+    array_ = new_array_;
+    array_size_ = new_array_size_;
+    return;
 }
-
-
-
+template <typename T>
+bool stack<T>::empty_() const {
+    return count_ == 0;
+}
+template <typename T>
+stack<T>& stack<T>::operator=(const stack<T> &tmp) {
+    count_ = tmp.count_;
+    array_size_ = tmp.array_size_;
+    array_ = new T[array_size_];
+    copy(tmp, tmp + count_, array_);
+    return *this;
+}
+template <typename T>
+stack<T>::stack(const stack &tmp)
+: count_(tmp.count_),
+array_size_(tmp.array_size_)
+{
+    array_ = new T[array_size_];
+    copy(tmp, tmp + count_, array_);
+}
 int main(void) {
-
-	stack <int> a;
-	a.push(1);
-	a.push(2);
-	a.push(3);
-	cout << a.pop() << endl;
-	cout << a.pop() << endl;
-	system("pause");
+    
+    stack <int> a;
+    a.push(1);
+    a.push(2);
+    a.push(3);
+    cout << a.pop() << endl;
+    cout << a.pop() << endl;
+    
 }
