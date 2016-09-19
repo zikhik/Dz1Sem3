@@ -79,8 +79,7 @@ template <typename T>
 stack<T>& stack<T>::operator=(const stack<T> &tmp) {
     count_ = tmp.count_;
     array_size_ = tmp.array_size_;
-    array_ = new T[array_size_];
-    copy(tmp, tmp + count_, array_);
+    array_ = newcopy(tmp.array_, count_, array_size_);
     return *this;
 }
 template <typename T>
