@@ -7,6 +7,7 @@
 #include <iostream>
 
 using namespace std;
+template<typename T>
 auto newcopy( const T * tmp, size_t size, size_t count) -> T*
 {
 	T * buff = new T[size];
