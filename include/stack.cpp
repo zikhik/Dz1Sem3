@@ -7,6 +7,12 @@
 #include <iostream>
 
 using namespace std;
+auto newcopy( const T * tmp, size_t size, size_t count) -> T*
+{
+	T * buff = new T[size];
+	copy(tmp, tmp + count, buff);
+	return buff;	
+}
 
 template <typename T>
 class stack
@@ -80,10 +86,9 @@ stack<T>& stack<T>::operator=(const stack<T> &tmp) {
 template <typename T>
 stack<T>::stack(const stack &tmp)
 : count_(tmp.count_),
-array_size_(tmp.array_size_)
+array_size_(tmp.array_size_),array_(newcopy(tmp.array_, tmp.array_size_,tmp.count_))
 {
-    array_ = new T[array_size_];
-    copy(tmp, tmp + count_, array_);
+
 }
 
 #endif
