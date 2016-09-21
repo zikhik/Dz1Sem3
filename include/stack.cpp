@@ -78,9 +78,14 @@ bool stack<T>::empty_() const {
 }
 template <typename T>
 stack<T>& stack<T>::operator=(const stack<T> &tmp) {
-    count_ = tmp.count_;
-    array_size_ = tmp.array_size_;
-    array_ = newcopy(tmp.array_, count_, array_size_);
+	if (this != &tmp) {
+	T* temp = newcopy(tmp.array_,tmp.array_size_,tmp.count_);
+	delete [] array_;
+	array_= temp;
+    	count_ = tmp.count_;
+    	array_size_ = tmp.array_size_;
+    	delete [] temp;
+	}
     return *this;
 }
 template <typename T>
