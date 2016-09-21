@@ -30,7 +30,7 @@ SCENARIO("prisv", "[prisv]"){
   stack<int> s2;
   s2=s;
   REQUIRE(s2.count()==1);
-  REQUIRE(s2.pop()==1);
+  REQUIRE(s2.top()==1);
 }
 
 
