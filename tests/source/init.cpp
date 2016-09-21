@@ -20,7 +20,8 @@ SCENARIO("pop", "[pop]"){
   stack<int> s;
   s.push(1);
   REQUIRE(s.count()==1);
-  REQUIRE(s.top()==1);
+  s.pop();
+  REQUIRE(s.count()==0);
 }
 
 SCENARIO("prisv", "[prisv]"){
@@ -28,8 +29,9 @@ SCENARIO("prisv", "[prisv]"){
   s.push(1);
   stack<int> s2;
   s2=s;
-  REQUIRE(s.count()==1);
-  REQUIRE(s.pop()==1);
+  REQUIRE(s2.count()==1);
+  s.pop();
+  REQUIRE(s2.count()==0);
 }
 
 
