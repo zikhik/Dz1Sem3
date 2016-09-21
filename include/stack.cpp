@@ -72,12 +72,12 @@ void stack<T>::grow() { /*noexcept*/
     if (array_size_ == 0) new_array_size_=1;
     if (array_size_ <= count_) new_array_size_= new_array_size_*2;
     T *new_array_ = new T[new_array_size_];
-    copy(array_, array_ + count_, new_array_);
-    if (!empty_()) {
+     if (!empty_()) {
+        copy(array_, array_ + count_, new_array_);
         delete[] array_;
-    }
-    array_ = new_array_;
+        }
     array_size_ = new_array_size_;
+    array_ = newcopy(new_array_,new_array_size_,count_);
 
 }
 template <typename T>
