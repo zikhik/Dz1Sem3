@@ -13,7 +13,7 @@ SCENARIO("push", "[push]"){
   stack<int> s;
   s.push(1);
   REQUIRE(s.count()==1);
-  REQUIRE(s.pop()==1);
+  REQUIRE(s.top()==1);
 }
 
 SCENARIO("pop", "[pop]"){
@@ -30,8 +30,7 @@ SCENARIO("prisv", "[prisv]"){
   stack<int> s2;
   s2=s;
   REQUIRE(s2.count()==1);
-  s.pop();
-  REQUIRE(s2.count()==0);
+  REQUIRE(s2.pop()==1);
 }
 
 
