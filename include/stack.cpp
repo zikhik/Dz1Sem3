@@ -24,7 +24,8 @@ public:
     stack& operator= (const stack &);
     size_t count() const;
     void push(T const &item);
-    void pop();
+    void pop_();
+    T pop();
     auto top() const -> const T&;
     bool empty_() const;
     ~stack();
@@ -38,6 +39,14 @@ private:
     
     
 };
+template<typename T>
+T stack<T>::pop() {
+    if (empty_()) {
+        throw std::logic_error("Stack is empty!");
+    }
+    return array_[--count_];
+    
+}
 template <typename T>
 stack<T>::stack() : array_size_(0), count_(0), array_(nullptr) {}; /*noexcept*/
 template <typename T>
@@ -52,7 +61,7 @@ void stack<T>::push(T const &item) /*noexcept*/
 }
 
 template<typename T>
-void stack<T>::pop() { 	/*strong*/
+void stack<T>::pop_() { 	/*strong*/
     if (empty_()) {
         throw std::logic_error("Stack is empty!");
     }
