@@ -8,10 +8,15 @@
 
 using namespace std;
 template<typename T>
-auto newcopy( const T * tmp, size_t size, size_t count) -> T* /*basic*/
+auto newcopy( const T * tmp, size_t size, size_t count) -> T* /*strong*/
 {
-    T * buff = new T[size];
-    copy(tmp, tmp + count, buff);
+      T * buff = new T[size];
+    try {
+    copy(tmp, tmp + count, buff);}
+    cathc(...){
+    delete[] buff;
+    throw; }
+    
     return buff;
 }
 
