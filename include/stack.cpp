@@ -81,7 +81,7 @@ auto stack<T>::top() const -> const T& { /*strong*/
 
 }
 template <typename T>
-void stack<T>::grow() { /*noexcept*/
+void stack<T>::grow() { /*strong*/
     size_t new_array_size_=0;
     if (array_size_ == 0) new_array_size_=1;
     if (array_size_ <= count_) new_array_size_= new_array_size_*2;
