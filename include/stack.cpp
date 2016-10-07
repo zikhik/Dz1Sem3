@@ -85,14 +85,14 @@ void stack<T>::grow() { /*strong*/
     size_t new_array_size_=0;
     if (array_size_ == 0) new_array_size_=1;
     if (array_size_ <= count_) new_array_size_= new_array_size_*2;
-    T *new_array_ = new T[new_array_size_];
+    T *new_array_ = array_ = newcopy(new_array_,new_array_size_,count_);
      if (!empty_()) {
         copy(array_, array_ + count_, new_array_);
         delete[] array_;
         }
+      Allocator<T>::ptr_ = new_array_;
     array_size_ = new_array_size_;
-    array_ = newcopy(new_array_,new_array_size_,count_);
-
+    
 }
 template <typename T>
 bool stack<T>::empty_() const { /*noexcept*/
@@ -100,12 +100,12 @@ bool stack<T>::empty_() const { /*noexcept*/
 }
 template <typename T>
 stack<T>& stack<T>::operator=(const stack<T> &tmp) { /*strong*/
-    if (this != &tmp) {
+      array_ = newcopy(tmp.array_,tmp.array_size_,tmp.count_);
+      if (this != &tmp) {
         delete [] array_;
         count_ = tmp.count_;
         array_size_ = tmp.array_size_;
-        array_ = newcopy(tmp.array_,tmp.array_size_,tmp.count_);
-
+        
     }
     return *this;
 }
