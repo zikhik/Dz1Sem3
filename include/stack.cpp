@@ -10,6 +10,7 @@
 #include <cstdlib>
 #include <string>
 #include <iostream>
+template<typename T>
 class allocator
 {
 protected:
@@ -52,14 +53,12 @@ std::swap(size_, other.size_);
 std::swap(count_, other.count_);
 };
 
-
-using namespace std;
 template<typename T>
 auto newcopy( const T * tmp, size_t size, size_t count) -> T* /*strong*/
 {
       T * buff = new T[size];
     try {
-    copy(tmp, tmp + count, buff);}
+    std::copy(tmp, tmp + count, buff);}
     catch(...){
     delete[] buff;
     throw; }
@@ -77,6 +76,7 @@ public:
     size_t count() const;
     void push(T const &item);
     void pop();
+    void grow();
     auto top() const -> const T&;
     bool empty_() const;
     ~stack();
@@ -84,7 +84,6 @@ public:
     
     
 };
-template<typename T>
 
 template <typename T>
 stack<T>::stack() {}; /*noexcept*/
@@ -121,14 +120,16 @@ auto stack<T>::top() const -> const T& { /*strong*/
 }
 template <typename T>
 void stack<T>::grow() { /*strong*/
-    size_t new_array_size_=0;
-    if (allocator<T>::size_ == allocator<T>::count_) new_array_size_= allocator<T>::size*2 + (allocator<T>::size==0);
-    T *new_array_ = newcopy(allocator<T>::ptr_,new_array_size_,allocator<T>::count_);
-     if (!empty_()) {
-        delete[] allocator<T>::ptr_;
-	allocator<T>::ptr_ = new_array_;
-    	allocator<T>::size_ = new_array_size_;
-        }
+    size_t array_size = max(this->size_ * 2, 0);
+
+    Stack temp{array_size};
+    while (temp.count() < this->count_) {
+        temp.push(this->ptr_[temp.count()]);
+    }
+
+    this->swap(temp);
+}
+
       
     
 }
