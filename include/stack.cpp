@@ -95,7 +95,7 @@ size_t  stack<T>::count() const { return allocator<T>::count_; }; /*noexcept*/
 template <typename T>
 void stack<T>::push(T const &item) /*noexcept*/
 {
-    if (allocator<T>::size_ <= allocator<T>::count_) { grow(); }
+    if (allocator<T>::size_ == allocator<T>::count_) { grow(); }
     
 construct(allocator<T>::ptr_+allocator<T>::count_,item);
 ++allocator<T>::count_;
