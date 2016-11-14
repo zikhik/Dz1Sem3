@@ -40,7 +40,7 @@
 	    }
 	}
 	template <typename T>
-	allocator<T>::allocator(size_t size) : ptr_(static_cast<T *>(size == 0 ? nullptr : operator new(size * sizeof(T)))), size_(0), count_(size) {
+	allocator<T>::allocator(size_t size) : ptr_(static_cast<T *>(size == 0 ? nullptr : operator new(size * sizeof(T)))), size_(size), count_(0) {
 	};
 	template <typename T>
 	allocator<T>::~allocator() {
