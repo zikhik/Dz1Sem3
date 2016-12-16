@@ -239,3 +239,5 @@ auto stack<T>::throw_is_empty()const->void
 }
 
 #endif
+
+
